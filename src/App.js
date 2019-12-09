@@ -5,22 +5,11 @@ import Person from "./Person/Person.js";
 class App extends React.Component {
     state = {
         persons: [
-            { name: "amritesh", age: 30 },
-            { name: "chandan", age: 20 },
-            { name: "aman", age: 35 }
+            { id: 1, name: "amritesh", age: 30 },
+            { id: 2, name: "chandan", age: 20 },
+            { id: 3, name: "aman", age: 35 }
         ],
         showPersons: false
-    };
-
-    switchNameHandler = newName => {
-        console.log(this);
-        this.setState({
-            persons: [
-                { name: newName, age: 50 },
-                { name: "chandan", age: 60 },
-                { name: "aman", age: 70 }
-            ]
-        });
     };
 
     togglePersonsHandler = () => {
@@ -28,27 +17,24 @@ class App extends React.Component {
         this.setState({ showPersons: !doesShow });
     };
 
-    nameChangeHandler = (a, b, c) => {
-        console.log(a);
-        console.log(b);
-        console.log(c);
-        // const persons = this.state.persons;
-        // persons.forEach(person => {
-        //     if (person.name === name) {
-        //         console.log("Inside this");
-        //         person.name = event.target.value;
-        //     }
-        // });
+    nameChangeHandler = (event, id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.id === id;
+        });
 
-        // this.setState({ persons });
+        const person = this.state.persons[personIndex];
+        person.name = event.target.value;
 
-        // this.setState({
-        //     persons: [
-        //         { name: "amritesh", age: 100 },
-        //         { name: event.target.value, age: 120 },
-        //         { name: "aman", age: 101 }
-        //     ]
-        // });
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
+
+        this.setState({ persons });
+    };
+
+    deletePerson = index => {
+        let persons = [...this.state.persons];
+        persons.splice(index, 1);
+        this.setState({ persons });
     };
 
     render() {
@@ -63,23 +49,16 @@ class App extends React.Component {
         let persons = null;
 
         if (this.state.showPersons) {
-            persons = this.state.persons.map(person => {
+            persons = this.state.persons.map((person, index) => {
                 return (
                     <Person
+                        key={person.id}
                         name={person.name}
                         age={person.age}
-                        // changed={this.nameChangeHandler.bind(
-                        //     this,
-                        //     person.name,
-                        //     person.age
-                        // )}
                         changed={event =>
-                            this.nameChangeHandler(
-                                person.name,
-                                event,
-                                person.age
-                            )
+                            this.nameChangeHandler(event, person.id)
                         }
+                        click={() => this.deletePerson(index)}
                     />
                 );
             });
