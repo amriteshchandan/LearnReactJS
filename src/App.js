@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./App.css";
 import Person from "./Person/Person.js";
+import Radium, { StyleRoot } from "radium";
 
 class App extends React.Component {
     state = {
@@ -44,7 +45,11 @@ class App extends React.Component {
             font: "inherit",
             border: "1px solid blue",
             padding: "8px",
-            cursor: "pointer"
+            cursor: "pointer",
+            ":hover": {
+                backgroundColor: "lightgreen",
+                color: "black"
+            }
         };
 
         let persons = null;
@@ -64,6 +69,10 @@ class App extends React.Component {
                 );
             });
             style.backgroundColor = "red";
+            style[":hover"] = {
+                backgroundColor: "salmon",
+                color: "black"
+            };
         }
 
         const classes = [];
@@ -76,20 +85,24 @@ class App extends React.Component {
         }
 
         return (
-            <div className="App">
-                <h1>I'm ReactJS App</h1>
-                <p className={classes.join(" ")}>This is really working!!</p>
-                <button style={style} onClick={this.togglePersonsHandler}>
-                    Toggle Persons
-                </button>
-                {persons}
-            </div>
+            <StyleRoot>
+                <div className="App">
+                    <h1>I'm ReactJS App</h1>
+                    <p className={classes.join(" ")}>
+                        This is really working!!
+                    </p>
+                    <button style={style} onClick={this.togglePersonsHandler}>
+                        Toggle Persons
+                    </button>
+                    {persons}
+                </div>
+            </StyleRoot>
         );
     }
     // return React.createElement("div", {className: "App" }, React.createElement("h1", null, "Hello World!")
 }
 
-export default App;
+export default Radium(App);
 
 // In arrow function parameter matches the argumant list. For ex - If event is passed as second arg, it will accessed as second
 // parameter and so on. Same goes with other args too.
