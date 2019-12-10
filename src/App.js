@@ -1,20 +1,7 @@
 import * as React from "react";
-import "./App.css";
 import Person from "./Person/Person.js";
-import styled from "styled-components";
+import styles from "./App.module.css";
 
-const StyledButton = styled.button`
-    background-color: ${props => (props.alt ? "red" : "green")};
-    color: white;
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-    &:hover {
-        background-color: ${props => (props.alt ? "solman" : "lightgreen")};
-        color: black;
-    }
-`;
 class App extends React.Component {
     state = {
         persons: [
@@ -51,6 +38,8 @@ class App extends React.Component {
     };
 
     render() {
+        let buttonClasses = [styles.Button];
+        console.log(buttonClasses);
         let persons = null;
         if (this.state.showPersons) {
             persons = this.state.persons.map((person, index) => {
@@ -66,27 +55,31 @@ class App extends React.Component {
                     />
                 );
             });
+            buttonClasses.push(styles.Red);
         }
 
-        const classes = [];
+        const assignedClasses = [];
 
         if (this.state.persons.length <= 2) {
-            classes.push("red");
+            assignedClasses.push(styles.red);
         }
         if (this.state.persons.length <= 1) {
-            classes.push("bold");
+            assignedClasses.push(styles.bold);
         }
 
         return (
-            <div className="App">
+            <div className={styles.App}>
                 <h1>I'm ReactJS App</h1>
-                <p className={classes.join(" ")}>This is really working!!</p>
-                <StyledButton
+                <p className={assignedClasses.join(" ")}>
+                    This is really working!!
+                </p>
+                <button
+                    className={buttonClasses.join(" ")}
                     alt={this.state.showPersons}
                     onClick={this.togglePersonsHandler}
                 >
                     Toggle Persons
-                </StyledButton>
+                </button>
                 {persons}
             </div>
         );
