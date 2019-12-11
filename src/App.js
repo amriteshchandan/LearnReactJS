@@ -94,3 +94,5 @@ export default App;
 // Here we need to pass event explicitly.
 
 // If we use bind , we don't need to pass event explicitly, it will be available as last parameter to recieving function
+
+// Edit
