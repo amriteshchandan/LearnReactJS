@@ -1,7 +1,7 @@
 import * as React from "react";
-import Person from "./Person/Person.js";
+import Persons from "../components/Persons/Persons.js";
+import Cockpit from "../components/Cockpit/Cockpit.js";
 import styles from "./App.module.css";
-import ErrorBoundry from "./ErrorBoundry/ErrorBoundry.js";
 
 class App extends React.Component {
   state = {
@@ -14,11 +14,13 @@ class App extends React.Component {
   };
 
   togglePersonsHandler = () => {
+    console.log("togglePersonsHandler called");
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
   };
 
   nameChangeHandler = (event, id) => {
+    console.log("nameChangeHandler called");
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
     });
@@ -33,6 +35,7 @@ class App extends React.Component {
   };
 
   deletePerson = index => {
+    console.log("deletePerson called");
     let persons = [...this.state.persons];
     persons.splice(index, 1);
     this.setState({ persons });
@@ -40,44 +43,28 @@ class App extends React.Component {
 
   render() {
     let buttonClasses = [styles.Button];
-    console.log(buttonClasses);
     let persons = null;
     if (this.state.showPersons) {
-      persons = this.state.persons.map((person, index) => {
-        return (
-          <ErrorBoundry key={person.id}>
-            <Person
-              name={person.name}
-              age={person.age}
-              changed={event => this.nameChangeHandler(event, person.id)}
-              click={() => this.deletePerson(index)}
-            ></Person>
-          </ErrorBoundry>
-        );
-      });
+      persons = (
+        <div>
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePerson}
+            changed={this.nameChangeHandler}
+          />
+        </div>
+      );
       buttonClasses.push(styles.Red);
-    }
-
-    const assignedClasses = [];
-
-    if (this.state.persons.length <= 2) {
-      assignedClasses.push(styles.red);
-    }
-    if (this.state.persons.length <= 1) {
-      assignedClasses.push(styles.bold);
     }
 
     return (
       <div className={styles.App}>
-        <h1>I'm ReactJS App</h1>
-        <p className={assignedClasses.join(" ")}>This is really working!!</p>
-        <button
-          className={buttonClasses.join(" ")}
-          alt={this.state.showPersons}
-          onClick={this.togglePersonsHandler}
-        >
-          Toggle Persons
-        </button>
+        <Cockpit
+          appTitle={this.props.appTitle}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+        />
         {persons}
       </div>
     );
@@ -91,6 +78,4 @@ export default App;
 // parameter and so on. Same goes with other args too.
 // Here we need to pass event explicitly.
 
-// If we use bind , we don't need to pass event explicitly, it will be available as last parameter to recieving function
-
-// Edit
+// If we use bind , we don't need to pass event explicitly, it will be available as last parameter to recieving function.
