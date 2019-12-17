@@ -4,6 +4,33 @@ import Cockpit from "../components/Cockpit/Cockpit.js";
 import styles from "./App.module.css";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("[App.js] constructor");
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("[App.js] getDerivedStateFromProps", props);
+    return state;
+  }
+
+  // componentWillUpdate() {
+  //   console.log("[App.js] componentWiilUpdate");
+  // }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[App.js] shouldComponentUpdate");
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log("[App.js] componentDidUpdate");
+  }
+
   state = {
     persons: [
       { id: 1, name: "amritesh", age: 30 },
@@ -42,6 +69,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log("[App.js] render");
     let buttonClasses = [styles.Button];
     let persons = null;
     if (this.state.showPersons) {
