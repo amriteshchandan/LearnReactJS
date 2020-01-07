@@ -2,7 +2,7 @@ import * as React from "react";
 import Persons from "../components/Persons/Persons.js";
 import Cockpit from "../components/Cockpit/Cockpit.js";
 import styles from "./App.module.css";
-import WithClass from "../hoc/WithClass/WithClass.js";
+import withClass from "../hoc/WithClass/withClass.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -88,7 +88,7 @@ class App extends React.Component {
     }
 
     return (
-      <WithClass classes={styles.App}>
+      <div className={styles.App}>
         <button
           onClick={() => {
             this.setState({ showCockpit: false });
@@ -105,13 +105,13 @@ class App extends React.Component {
           />
         ) : null}
         {persons}
-      </WithClass>
+      </div>
     );
   }
   // return React.createElement("div", {className: "App" }, React.createElement("h1", null, "Hello World!")
 }
 
-export default App;
+export default withClass(App, styles.App);
 
 // In arrow function parameter matches the argumant list. For ex - If event is passed as second arg, it will accessed as second
 // parameter and so on. Same goes with other args too.
