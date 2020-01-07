@@ -2,6 +2,7 @@ import * as React from "react";
 import Persons from "../components/Persons/Persons.js";
 import Cockpit from "../components/Cockpit/Cockpit.js";
 import styles from "./App.module.css";
+import WithClass from "../hoc/WithClass/WithClass.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +38,8 @@ class App extends React.Component {
       { id: 2, name: "chandan", age: 20 },
       { id: 3, name: "aman", age: 35 }
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
   togglePersonsHandler = () => {
@@ -86,15 +88,24 @@ class App extends React.Component {
     }
 
     return (
-      <div className={styles.App}>
-        <Cockpit
-          appTitle={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler}
-        />
+      <WithClass classes={styles.App}>
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false });
+          }}
+        >
+          Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            appTitle={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
         {persons}
-      </div>
+      </WithClass>
     );
   }
   // return React.createElement("div", {className: "App" }, React.createElement("h1", null, "Hello World!")

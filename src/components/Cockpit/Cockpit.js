@@ -3,11 +3,22 @@ import styles from "./Cockpit.module.css";
 
 const Cockpit = props => {
   useEffect(() => {
-    console.log("[Cockpit.js] useEffect");
-    setTimeout(() => {
+    console.log("[Cockpit.js] useEffect 1");
+    const timer = setTimeout(() => {
       alert("Data saved on cloud");
     }, 1000);
-  }, [props.persons]); // if the array passed is empty, useEffect behaves has componentDid mount and will run only once during creation
+    return () => {
+      // clearTimeout(timer);
+      console.log("[Cockpit.js] cleanup work in 1st useEffect");
+    };
+  }, []); // if the array passed is empty, useEffect behaves has componentDid mount and will run only once during creation
+
+  useEffect(() => {
+    console.log("[Cockpit.js] useEffect 2");
+    return () => {
+      console.log("[Cockpit.js] cleanup work in 2nd useEffect");
+    };
+  });
 
   const assignedClasses = [];
   let buttonClasses = [styles.Button];
@@ -15,10 +26,10 @@ const Cockpit = props => {
     buttonClasses.push(styles.Red);
   }
 
-  if (props.persons.length <= 2) {
+  if (props.personsLength <= 2) {
     assignedClasses.push(styles.red);
   }
-  if (props.persons.length <= 1) {
+  if (props.personsLength <= 1) {
     assignedClasses.push(styles.bold);
   }
 
@@ -33,4 +44,4 @@ const Cockpit = props => {
   );
 };
 
-export default Cockpit;
+export default React.memo(Cockpit);
