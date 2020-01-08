@@ -39,7 +39,8 @@ class App extends React.Component {
       { id: 3, name: "aman", age: 35 }
     ],
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   };
 
   togglePersonsHandler = () => {
@@ -60,7 +61,22 @@ class App extends React.Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons });
+    // setState is async call and does not gaurantee that this.changeCounter will always give
+    // updated value.
+
+    // this.setState({
+    //   persons: persons,
+    //   changeCounter: this.state.changeCounter + 1
+    // });
+
+    // React gaurantees that prevState will be consistent.
+    // Hence, this was of updating state is good practive if new state depends upon prev state
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
   };
 
   deletePerson = index => {
