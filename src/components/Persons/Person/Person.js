@@ -5,6 +5,15 @@ import withClass from "../../../hoc/WithClass/withClass.js";
 import PropTypes from "prop-types";
 
 class Person extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputEle = React.createRef();
+  }
+  componentDidMount() {
+    // this.inputEle.focus(); - use 1
+    this.inputEle.current.focus(); // - use -2 modern
+  }
+
   render() {
     console.log("[Person.js] rendering....");
     return (
@@ -15,6 +24,13 @@ class Person extends React.Component {
         </p>
         <input
           type="text"
+          // use - 1 old
+          // ref={inputEle => {
+          //   this.inputEle = inputEle;
+          // }}
+
+          // use - 2 modern 16.3 onwards
+          ref={this.inputEle}
           onChange={this.props.changed}
           value={this.props.name}
         ></input>
