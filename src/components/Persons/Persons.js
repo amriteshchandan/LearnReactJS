@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Person from "./Person/Person.js";
+import AuthContext from "../../context/auth-context.js";
 
 class Persons extends Component {
   // static getDerivedStateFromProps(props, state) {
@@ -39,7 +40,6 @@ class Persons extends Component {
           age={person.age}
           key={person.id}
           changed={event => this.props.changed(event, person.id)}
-          isAuth={this.props.isAuthenticated}
         />
       );
     });
