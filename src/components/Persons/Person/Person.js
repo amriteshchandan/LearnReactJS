@@ -15,10 +15,11 @@ class Person extends React.Component {
   }
 
   render() {
-    console.log("[Person.js] rendering....");
+    console.log("[Person.js] rendering....", this.props);
     return (
       // <div className={classes.Person}>
       <Aux>
+        {this.props.isAuth ? <p>Authenticated</p> : <p>Please log in.</p>}
         <p onClick={this.props.click}>
           I am {this.props.name} with age {this.props.age} {this.props.children}
         </p>

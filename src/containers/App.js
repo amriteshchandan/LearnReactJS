@@ -40,7 +40,8 @@ class App extends React.Component {
     ],
     showPersons: false,
     showCockpit: true,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   };
 
   togglePersonsHandler = () => {
@@ -86,6 +87,11 @@ class App extends React.Component {
     this.setState({ persons });
   };
 
+  loginHandler = () => {
+    console.log("+++++++++++++++++++++++++ loginHandler");
+    this.setState({ authenticated: true });
+  };
+
   render() {
     console.log("[App.js] render");
     let buttonClasses = [styles.Button];
@@ -97,6 +103,7 @@ class App extends React.Component {
             persons={this.state.persons}
             clicked={this.deletePerson}
             changed={this.nameChangeHandler}
+            isAuthenticated={this.state.authenticated}
           />
         </div>
       );
@@ -118,6 +125,7 @@ class App extends React.Component {
             showPersons={this.state.showPersons}
             personsLength={this.state.persons.length}
             clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
           />
         ) : null}
         {persons}

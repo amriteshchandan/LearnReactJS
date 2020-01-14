@@ -11,11 +11,11 @@ class Persons extends Component {
   //   console.log("[Persons.js] componentWillReceiveProps");
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("[Persons.js] shouldComponentUpdate");
-    return this.props.persons !== nextProps.persons;
-    // return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  // console.log("[Persons.js] shouldComponentUpdate");
+  // return this.props.persons !== nextProps.persons;
+  // return true;
+  // }
 
   getSnapshotBeforeUpdate(previousProps, previousState) {
     console.log("[Persons.js] getSnapshotBeforeUpdate");
@@ -39,6 +39,7 @@ class Persons extends Component {
           age={person.age}
           key={person.id}
           changed={event => this.props.changed(event, person.id)}
+          isAuth={this.props.isAuthenticated}
         />
       );
     });
